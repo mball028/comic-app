@@ -2,6 +2,7 @@ const comicImg = document.getElementById("comic-image");
 const input = document.getElementById("comic-selector");
 const submitBtn = document.getElementById("submit-btn");
 const comicTitle = document.getElementById("comic-title");
+const pubDate = document.getElementById("publish-date");
 
 function apiReturnHandler() {
   if (this.readyState == 4 && this.status == 200) {
@@ -29,19 +30,32 @@ function getComic() {
 }
 
 function displayComic(data) {
-  let date = `${data.month}/${data.day}/${data.year}`
+  let date = `${data.month}/${data.day}/${data.year}`;
   let currDate = new Date();
-  console.log(currDate);
+
+  // Comic Image
   comicImg.alt = data.alt;
   comicImg.src = data.img;
-  comicTitle.innerText = `#${data.num}: ${data.title}`
+
+  // Comic Title
+  currDate.getMonth() + 1 == data.month &&
+  currDate.getDate() == data.day &&
+  currDate.getFullYear() == data.year
+    ? (comicTitle.innerText = `Today's Comic #${data.num}: ${data.title}`)
+    : (comicTitle.innerText = `#${data.num}: ${data.title}`);
+
+  // Comic Publish Date
+  pubDate.innerHTML = `Published ${date}`;
 }
 
 getComic();
 
+
+// Fetch Comic on submit btn click
 submitBtn.addEventListener("click", () => {
   getComic();
 });
+// Fetch Comic on enter keydown
 input.addEventListener("keydown", e => {
   if (e.keyCode === 13) {
     getComic();
