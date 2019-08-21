@@ -5,6 +5,9 @@ const comicTitle = document.getElementById("comic-title");
 const pubDate = document.getElementById("publish-date");
 const errorMsg = document.getElementById("error-message");
 
+// from api return handler
+let maxIDNum = [];
+
 function apiReturnHandler() {
   if (this.readyState == 4 && this.status == 200) {
     let data = JSON.parse(this.responseText);
@@ -38,14 +41,16 @@ function getComic() {
 
 // check input value
 function checkInputValue(value) {
-  if (value == "" || value <= 2191 && value > 0) {
+  if (value == "" || (value <= 2191 && value > 0)) {
     errorMsg.innerText = "";
   } else if (value > 2191) {
+    comicImg.src = "";
+    comicImg.alt = "";
     throw {
       name: "numberOutOfRange",
       message: `${value} is outside of the comic ID range.`
     };
-  } else if (value <= 0) {
+  } else if (value < 1) {
     throw {
       name: "numberBelowOne",
       message: "Please enter a number greater than zero."
