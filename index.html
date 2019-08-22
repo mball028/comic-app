@@ -13,18 +13,27 @@
 </head>
 
 <body>
-    <h1>My Comic App</h1>
-    <h3 id="comic-title">Comic of the Day</h3>
-    <div>
-        <img src="" alt="" id="comic-image">
-        <p id="alt-text"></p>
-        <p id="publish-date"></p>
-    </div>
+    <main>
 
-    <h3>Enter a Comic Number</h3>
-    <input type="number" id="comic-selector" placeholder="enter a comic #">
-    <button id="submit-btn">Submit</button>
-    <p id="error-message"></p>
+        <h1>My Comic App</h1>
+        <section id="comic-info">
+            <h3 id="comic-title">Comic of the Day</h3>
+            <img src="" alt="" id="comic-image">
+            <p id="alt-text"></p>
+            <p id="publish-date"></p>
+        </section>
+
+        <hr>
+
+        <section id="input-section">
+            <h3>Enter a Comic Number</h3>
+            <input type="number" id="comic-selector" placeholder="enter a comic #">
+            <button id="submit-btn">Submit</button>
+            <p id="error-message"></p>
+        </section>
+
+    </main>
+
 
     <script src="./script.js"></script>
 </body>

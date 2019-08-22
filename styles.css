@@ -2,6 +2,7 @@ body {
     text-align: center;
     font-family: 'Shadows Into Light', cursive;
     font-size: 1.2em;
+    letter-spacing: 2px;
 }
 
 button {
@@ -25,7 +26,9 @@ input {
     border-radius: 3px;
     padding: 5px;
 }
-
+hr {
+    width: 10%;
+}
 #error-message {
     color: red;
     font-family: monospace;
@@ -35,5 +38,5 @@ input {
 
 #publish-date {
     font-style: italic;
-    font-size: .8em;
+    font-size: .7em;
 }
