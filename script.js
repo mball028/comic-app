@@ -13,7 +13,7 @@ function apiReturnHandler() {
   if (this.readyState == 4 && this.status == 200) {
     let data = JSON.parse(this.responseText);
     // set max comic id on first get request to api
-    if(maxIDNum.length < 1) {
+    if (maxIDNum.length < 1) {
       maxIDNum.push(data.num);
     }
     console.log(data);
@@ -75,10 +75,13 @@ function displayComic(data) {
   comicImg.src = data.img;
 
   // Comic Title (check publish date v. current date)
+  console.log(maxIDNum[0]);
   currDate.getMonth() + 1 == data.month &&
   currDate.getDate() == data.day &&
   currDate.getFullYear() == data.year
     ? (comicTitle.innerText = `Today's Comic #${data.num}: ${data.title}`)
+    : data.num == maxIDNum[0]
+    ? (comicTitle.innerText = `Latest Comic #${data.num}: ${data.title}`)
     : (comicTitle.innerText = `#${data.num}: ${data.title}`);
 
   // alt text
@@ -88,7 +91,7 @@ function displayComic(data) {
   pubDate.innerHTML = `Published ${date}`;
 }
 
-// 
+//
 getComic();
 
 // Fetch Comic on submit btn click
