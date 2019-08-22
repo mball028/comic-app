@@ -4,6 +4,7 @@ const submitBtn = document.getElementById("submit-btn");
 const comicTitle = document.getElementById("comic-title");
 const pubDate = document.getElementById("publish-date");
 const errorMsg = document.getElementById("error-message");
+const altTxt = document.getElementById("alt-text");
 
 // from api return handler
 let maxIDNum = [];
@@ -11,6 +12,10 @@ let maxIDNum = [];
 function apiReturnHandler() {
   if (this.readyState == 4 && this.status == 200) {
     let data = JSON.parse(this.responseText);
+    // set max comic id on first get request to api
+    if(maxIDNum.length < 1) {
+      maxIDNum.push(data.num);
+    }
     console.log(data);
     displayComic(data);
   }
@@ -41,7 +46,8 @@ function getComic() {
 
 // check input value
 function checkInputValue(value) {
-  if (value == "" || (value <= 2191 && value > 0)) {
+  // maxNum is value pushed to array on first get request
+  if (value == "" || (value <= maxIDNum[0] && value > 0)) {
     errorMsg.innerText = "";
   } else if (value > 2191) {
     comicImg.src = "";
@@ -62,23 +68,27 @@ function displayComic(data) {
   let date = `${data.month}/${data.day}/${data.year}`;
   let currDate = new Date();
 
-  input.placeholder = `enter comic# 1-${data.num}`;
+  input.placeholder = `enter comic# 1-${maxIDNum[0]}`;
 
   // Comic Image
   comicImg.alt = data.alt;
   comicImg.src = data.img;
 
-  // Comic Title
+  // Comic Title (check publish date v. current date)
   currDate.getMonth() + 1 == data.month &&
   currDate.getDate() == data.day &&
   currDate.getFullYear() == data.year
     ? (comicTitle.innerText = `Today's Comic #${data.num}: ${data.title}`)
     : (comicTitle.innerText = `#${data.num}: ${data.title}`);
 
+  // alt text
+  altTxt.innerHTML = data.alt;
+
   // Comic Publish Date
   pubDate.innerHTML = `Published ${date}`;
 }
 
+// 
 getComic();
 
 // Fetch Comic on submit btn click
