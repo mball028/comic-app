@@ -6,6 +6,13 @@ const pubDate = document.getElementById("publish-date");
 const errorMsg = document.getElementById("error-message");
 const altTxt = document.getElementById("alt-text");
 
+// comic buttons
+const firstComicBtn = document.getElementById("first-comic-btn");
+const backComicBtn = document.getElementById("back-comic-btn");
+const randomBtn = document.getElementById("random-comic-btn");
+const forwardComicBtn = document.getElementById("forward-comic-btn");
+const currentComicBtn = document.getElementById("current-comic-btn");
+
 // from api return handler
 let maxIDNum = [];
 
@@ -23,9 +30,9 @@ function apiReturnHandler() {
 
 // Call the comic API
 
-function getComic() {
+function getComic(comicURL) {
   const proxy = "https://cors-anywhere.herokuapp.com/";
-  let apiURL = "https://xkcd.com/info.0.json";
+  let apiURL = comicURL;
 
   try {
     checkInputValue(input.value);
@@ -89,18 +96,35 @@ function displayComic(data) {
 
   // Comic Publish Date
   pubDate.innerHTML = `Published ${date}`;
+
+  // Comic control buttons
+  firstComicBtn.addEventListener("click", () => {
+    getComic("https://xkcd.com/1/info.0.json");
+  });
+  backComicBtn.addEventListener("click", () => {
+    getComic(`https://xkcd.com/${data.num - 1}/info.0.json`);
+  });
+  randomBtn.addEventListener("click", () => {
+    getComic(`https://xkcd.com/${Math.ceil(Math.random() * 2191)}/info.0.json`);
+  });
+  firstComicBtn.addEventListener("click", () => {
+    getComic(`https://xkcd.com/${data.num + 1}/info.0.json`);
+  });
+  currentComicBtn.addEventListener("click", () => {
+    getComic(`https://xkcd.com/${maxIDNum[0]}/info.0.json`);
+  });
 }
 
 //
-getComic();
+getComic("https://xkcd.com/info.0.json");
 
 // Fetch Comic on submit btn click
 submitBtn.addEventListener("click", () => {
-  getComic();
+  getComic("https://xkcd.com/info.0.json");
 });
 // Fetch Comic on enter keydown
 input.addEventListener("keyup", e => {
   if (e.keyCode === 13) {
-    getComic();
+    getComic("https://xkcd.com/info.0.json");
   }
 });

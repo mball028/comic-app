@@ -28,6 +28,10 @@ footer {
     font-size: .5em;
 }
 
+h1 {
+    text-decoration: underline;
+}
+
 img {
     border: 4px outset seagreen;
     padding: 15px;
