@@ -57,14 +57,14 @@ function checkInputValue(value) {
   // maxNum is value pushed to array on first get request
   if (value == "" || (value <= maxIDNum[0] && value > 0)) {
     errorMsg.innerText = "";
-  } else if (value > 2191) {
-    comicImg.src = "";
-    comicImg.alt = "";
+  } else if (value > maxIDNum[0]) {
+    clearComic();
     throw {
       name: "numberOutOfRange",
       message: `${value} is outside of the comic ID range.`
     };
   } else if (value < 1) {
+    clearComic();
     throw {
       name: "numberBelowOne",
       message: "Please enter a number greater than zero."
@@ -97,6 +97,14 @@ function displayComic(data) {
 
   // Comic Publish Date
   pubDate.innerHTML = `Published ${date}`;
+}
+
+function clearComic() {
+  comicImg.src = "";
+  comicImg.alt = "";
+  comicTitle.innerText = "Please enter a valid comic id...";
+  altTxt.innerText = "";
+  pubDate.innerText = "";
 }
 
 //

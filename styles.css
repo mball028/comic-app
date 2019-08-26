@@ -41,6 +41,9 @@ input {
     border-radius: 3px;
     padding: 5px;
 }
+main {
+    padding: 15px;
+}
 hr {
     width: 10%;
 }
